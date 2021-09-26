@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import Table from "./Table";
+import { FaPlusCircle } from "react-icons/fa";
 import { useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+
+import Table from "./Table";
 import AddEdit from "./AddEditDelete";
 import CountDown from "./CountDownTimer";
 import getExchangeRate from "../common/getExchangeRate";
@@ -65,12 +67,13 @@ const Main = (props: MainProps) => {
 
   return (
     <>
-      {/* <AddButtonContainer>
-          <Button onClick={onOpenAddEdit}>Add</Button>
-        </AddButtonContainer> */}
-
       <MainWrapper>
-        <MainContent>
+        <MainContent
+          initial={{ y: 200, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 200, opacity: 0 }}
+          transition={{ duration: 0.5, type: "easeout" }}
+        >
           <CountDownContainer>
             <CountDown
               startTime={120}
@@ -80,7 +83,12 @@ const Main = (props: MainProps) => {
           <Header>Merchant Items</Header>
 
           <AddButtonContainer>
-            {!editingRow && <Button onClick={onOpenAddEdit}>Add</Button>}
+            {!editingRow && (
+              <Button onClick={onOpenAddEdit}>
+                Add
+                <FaPlusCircle style={{ marginLeft: "0.5rem" }} />
+              </Button>
+            )}
           </AddButtonContainer>
           <Table headings={headings} data={tableData}></Table>
         </MainContent>
@@ -114,11 +122,7 @@ const Header = styled(motion.div)`
 `;
 
 const CountDownContainer = styled.div`
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   position: relative;
-  background-color: green;
 `;
 const AddButtonContainer = styled.div`
   display: flex;
@@ -128,7 +132,7 @@ const AddButtonContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const MainContent = styled.div`
+const MainContent = styled(motion.div)`
   position: relative;
   width: 70%;
   background-color: white;
@@ -141,7 +145,6 @@ const MainContent = styled.div`
 `;
 
 const MainWrapper = styled.div`
-  /* background: blue; */
   display: flex;
   justify-content: center;
   align-items: flex-start;

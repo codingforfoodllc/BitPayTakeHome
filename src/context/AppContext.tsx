@@ -38,16 +38,12 @@ interface AppContextProps {
   tableData: RowData[];
   setTableData: React.Dispatch<React.SetStateAction<RowData[]>>;
   setEditingRow: React.Dispatch<React.SetStateAction<RowData | null>>;
-  //addToTable: (rowData: RowData) => void;
-  //editTableValue: (rowData: RowData) => void;
+  editingRow: RowData | null;
   updateTableData: (rowData: RowData) => void;
   deleteTableValue: (rowData: RowData) => void;
   editRow: (rowData: RowData) => void;
-  editingRow: RowData | null;
-  //onEditTableRow: (rowData: RowData | null) => void;
 }
 
-//const AppContext = createContext<Partial<AppContextProps>>({});
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 type AppProviderProps = {
@@ -56,6 +52,7 @@ type AppProviderProps = {
 
 const AppContextProvider = (props: AppProviderProps) => {
   const [tableData, setTableData] = useState<RowData[]>(initialData);
+  const [editingRow, setEditingRow] = useState<RowData | null>(null);
 
   const updateTableData = (rowData: RowData) => {
     const Ids: number[] = tableData.map((row: RowData) => {
@@ -89,8 +86,6 @@ const AppContextProvider = (props: AppProviderProps) => {
     setTableData(updatedValues);
   };
 
-  const [editingRow, setEditingRow] = useState<RowData | null>(null);
-
   const editRow = (editRowData: RowData) => {
     const updatedValues = tableData.map((row: RowData) => {
       return row.Id === editRowData.Id
@@ -108,12 +103,9 @@ const AppContextProvider = (props: AppProviderProps) => {
         tableData,
         setTableData,
         editRow,
-        //addToTable,
-        //editTableValue,
         updateTableData,
         deleteTableValue,
         setEditingRow,
-        //onEditTableRow: onEditingRow,
         editingRow,
       }}
     >

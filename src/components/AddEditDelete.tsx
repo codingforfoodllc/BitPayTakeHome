@@ -2,9 +2,10 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { FaBeer, FaTimesCircle, FaRegSave } from "react-icons/fa";
+
 import numberFormatToUSD from "../common/formatToUSCurrency";
 import getExchangeRate from "../common/getExchangeRate";
-
 import { RowData } from "../domain/RowData";
 import useAppContext from "../hooks/useAppContext";
 import Button from "./styled/Button";
@@ -46,7 +47,9 @@ const AddEditDelete = (props: AddEditDeleteProps) => {
   return (
     <Container>
       <ContentContainer>
-        <Button onClick={(e) => setEditingRow(null)}>close</Button>
+        <Button onClick={(e) => setEditingRow(null)}>
+          <FaBeer style={{ marginRight: "0.5rem" }} /> Close
+        </Button>
         <Header
           initial={{ x: "100vw", opacity: 0 }}
           animate={{ x: "0", opacity: 1 }}
@@ -160,10 +163,14 @@ const AddEditDelete = (props: AddEditDeleteProps) => {
           <ButtonsContainer>
             {editingRow && (
               <Button type="button" onClick={(e) => onDelete()} danger={true}>
+                <FaTimesCircle style={{ marginRight: "0.5rem" }} />
                 Delete
               </Button>
             )}
-            <Button type="submit">Save</Button>
+            <Button type="submit">
+              <FaRegSave style={{ marginRight: "0.5rem" }} />
+              Save
+            </Button>
           </ButtonsContainer>
         </form>
       </ContentContainer>
