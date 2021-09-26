@@ -36,13 +36,15 @@ const CountDownContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  margin-top: -4rem;
+  margin-left: -4rem;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 5rem;
   height: 5rem;
   border-radius: 9999px;
-  background-color: red;
+  background-color: #fc5f47;
   color: white;
   font-weight: 700;
   font-size: 1.25rem;

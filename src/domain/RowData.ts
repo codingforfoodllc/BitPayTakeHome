@@ -6,4 +6,5 @@ export type RowData = {
   Currency: string;
   PriceUSD: string;
   USDAmount: string;
+  Selected: boolean;
 };

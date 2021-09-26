@@ -1,9 +1,7 @@
-import { ReactSVG } from "react-svg";
 import styled from "styled-components";
 
 const HeaderContent = styled.div`
-  /* background: yellow; */
-  /* height: 9rem; */
+  height: 9rem;
 `;
 
 const Logo = styled.div`
@@ -30,7 +28,6 @@ const HeaderSubText = styled.div`
 const Header = () => {
   return (
     <HeaderContent>
-      {/* <ReactSVG src="wave.svg" style={{ zIndex: -100 }} /> */}
       <Logo>
         <HeaderText>BitPay</HeaderText>
         <HeaderSubText>Take home Test</HeaderSubText>

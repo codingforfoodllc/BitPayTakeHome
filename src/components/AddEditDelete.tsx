@@ -1,24 +1,19 @@
 import { motion } from "framer-motion";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import numberFormatToUSD from "../common/formatToUSCurrency";
 import getExchangeRate from "../common/getExchangeRate";
-import { AppContext } from "../context/AppContext";
+
 import { RowData } from "../domain/RowData";
+import useAppContext from "../hooks/useAppContext";
+import Button from "./styled/Button";
 
-type AddEditDeleteProps = {
-  addToTable: (rowData: RowData) => void;
-  editTableValue: (rowData: RowData) => void;
-  deleteTableValue: (rowData: RowData) => void;
-};
+type AddEditDeleteProps = {};
 
-const AddEditDelete = ({
-  addToTable,
-  editTableValue,
-  deleteTableValue,
-}: AddEditDeleteProps) => {
-  const { onEditTableRow, editingRow } = useContext(AppContext);
+const AddEditDelete = (props: AddEditDeleteProps) => {
+  const { updateTableData, deleteTableValue, setEditingRow, editingRow } =
+    useAppContext();
 
   const { register, handleSubmit, reset, formState } = useForm<RowData>({
     mode: "onBlur",
@@ -26,7 +21,6 @@ const AddEditDelete = ({
   const { errors } = formState;
 
   useEffect(() => {
-    console.log("useeffect addedit");
     if (editingRow) {
       reset(editingRow);
     }
@@ -36,15 +30,9 @@ const AddEditDelete = ({
     const exchangeRateResult = await getExchangeRate(data.Currency);
     data.PriceUSD = numberFormatToUSD(exchangeRateResult.rate);
 
-    if (editingRow) {
-      editTableValue(data);
-    } else {
-      addToTable(data);
-    }
-    //todo:is this needed?
-    if (onEditTableRow) {
-      onEditTableRow(null);
-    }
+    updateTableData(data);
+
+    setEditingRow(null);
 
     reset();
   };
@@ -57,8 +45,8 @@ const AddEditDelete = ({
 
   return (
     <Container>
-      {/* </motion.main> */}
       <ContentContainer>
+        <Button onClick={(e) => setEditingRow(null)}>close</Button>
         <Header
           initial={{ x: "100vw", opacity: 0 }}
           animate={{ x: "0", opacity: 1 }}
@@ -86,6 +74,7 @@ const AddEditDelete = ({
             <Input
               type="text"
               id="Item"
+              placeholder="Item"
               errored={errors?.Item?.type === "required"}
               {...register("Item", { required: true })}
             />
@@ -98,6 +87,7 @@ const AddEditDelete = ({
             <Input
               type="text"
               id="CryptoAmount"
+              placeholder="Amount in crypto"
               errored={
                 errors?.CryptoAmount?.type === "required" ||
                 (errors?.CryptoAmount?.message as string)?.length > 0
@@ -121,11 +111,19 @@ const AddEditDelete = ({
           <InputContainer>
             <Label htmlFor="Currency">Currency</Label>
             <Select
+              placeholder="Select currency"
               {...register("Currency", {
                 required: true,
               })}
+              errored={errors.Currency?.type === "required"}
             >
-              <option value=""></option>
+              <option
+                // style={{ color: "red", fontStyle: "italic" }}
+                // disabled
+                // hidden
+                // selected
+                value=""
+              ></option>
               <option value="BTC">BTC</option>
               <option value="BCH">BCH</option>
               <option value="ETH">ETH</option>
@@ -135,21 +133,23 @@ const AddEditDelete = ({
               <Error>Currency is required.</Error>
             )}
           </InputContainer>
-          <InputContainer>
+          {/* <InputContainer>
             <Label htmlFor="PriceUSD">Price/crypto (USD)</Label>
             <Input
               id="PriceUSD"
+              placeholder="Price of crypto in USD"
               errored={errors?.PriceUSD?.type === "required"}
               {...register("PriceUSD", { required: true })}
             />
             {errors?.Item?.type === "required" && (
               <Error>Price/crypto(USD) is required.</Error>
             )}
-          </InputContainer>
-          <InputContainer className="field">
+          </InputContainer> */}
+          <InputContainer>
             <Label htmlFor="USDAmount">Amount(USD)</Label>
             <Input
               id="USDAmount"
+              placeholder="Amount in USD"
               errored={errors?.USDAmount?.type === "required"}
               {...register("USDAmount", { required: true })}
             />
@@ -157,25 +157,41 @@ const AddEditDelete = ({
               <Error>Amount(USD) is required.</Error>
             )}
           </InputContainer>
-          <button type="submit">Save</button>
-          {editingRow && <button onClick={(e) => onDelete()}>Delete</button>}
+          <ButtonsContainer>
+            {editingRow && (
+              <Button type="button" onClick={(e) => onDelete()} danger={true}>
+                Delete
+              </Button>
+            )}
+            <Button type="submit">Save</Button>
+          </ButtonsContainer>
         </form>
       </ContentContainer>
     </Container>
   );
 };
 
+const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+`;
+
 const Header = styled(motion.div)`
-  color: gray;
-  font-size: 1.25rem;
+  color: #6139f8;
+  font-size: 1.5rem;
   line-height: 1.75rem;
   text-align: center;
-  margin-bottom: 1rem; ;
+  text-decoration: underline;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
 `;
 
 const Container = styled.div`
   /* background-color: pink; */
-  height: 100vh;
+  height: 100%;
+  position: relative;
 `;
 
 const ContentContainer = styled.div`
@@ -229,6 +245,7 @@ const Input = styled.input<InputProps>`
   /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); */
   ::placeholder {
     color: gray;
+    font-style: italic;
   }
 `;
 
