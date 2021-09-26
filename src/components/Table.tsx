@@ -86,11 +86,9 @@ const TableContent = styled.div`
   background: white;
   width: 70%;
   display: flex;
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
-  /* margin-top: -1rem; */
+  /* margin-left: 2.5rem;
+  margin-right: 2.5rem; */
   padding: 2rem;
-  display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 0.375rem;

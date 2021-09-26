@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 
 interface CountDownTimerProps {
   startTime: number;
@@ -8,20 +9,6 @@ const CountDownTimer = ({
   startTime,
   countDownCompleted,
 }: CountDownTimerProps) => {
-  //const defaultTime = 5;
-
-  // const [seconds, setSeconds] = useState<number>(defaultTime);
-
-  // useEffect(() => {
-  //   seconds > 0 && setTimeout(() => setSeconds(seconds - 1), 1000);
-  // }, [seconds]);
-
-  // return (
-  //   <div>
-  //     <div>Countdown: {seconds}</div>
-  //   </div>
-  // );
-
   const [count, setCount] = useState(startTime);
   const timerRef = useRef<NodeJS.Timeout>();
 
@@ -42,6 +29,24 @@ const CountDownTimer = ({
     }
   }, [count, countDownCompleted, startTime]);
 
-  return <div>{count}</div>;
+  return <CountDownContainer>{count}</CountDownContainer>;
 };
+
+const CountDownContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 9999px;
+  background-color: red;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+`;
+
 export default CountDownTimer;

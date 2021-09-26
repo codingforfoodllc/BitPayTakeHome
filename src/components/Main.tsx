@@ -16,17 +16,24 @@ import { RowData } from "../domain/RowData";
 //   font-weight: 500;
 // `;
 
+const Test = styled.div`
+  background-image: url("wave.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+`;
+
 const MainContent = styled.div`
-  background: green;
   height: 100%;
+  /* margin-top: -8.5rem; */
 `;
 
 const TableContent = styled.div`
-  background: blue;
+  /* background: blue; */
   display: flex;
   justify-content: center;
   align-items: flex-start;
   height: 100%;
+  width: 100%;
 `;
 
 type MainProps = {};
@@ -143,10 +150,7 @@ const Main = (props: MainProps) => {
         <div>
           <button onClick={onOpenSideBar}>sidebar</button>
         </div>
-        <CountDown
-          startTime={120}
-          countDownCompleted={onCountDownCompleted}
-        ></CountDown>
+
         {/* <AnimatePresence>
           {openAddEdit && (
             <motion.main
@@ -162,7 +166,31 @@ const Main = (props: MainProps) => {
         </AnimatePresence> */}
 
         <TableContent>
-          <Table headings={headings} data={tableData}></Table>
+          {/* todo */}
+          <div
+            style={{
+              position: "relative",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            {/* <div
+              style={{
+                position: "relative",
+
+                width: "100%",
+              }}
+            > */}
+            <CountDown
+              startTime={120}
+              countDownCompleted={onCountDownCompleted}
+            ></CountDown>
+            <Table headings={headings} data={tableData}></Table>
+            {/* </div> */}
+          </div>
+
           <AnimatePresence>
             {(editingRow || openSideBar) && (
               <motion.main
@@ -181,6 +209,7 @@ const Main = (props: MainProps) => {
             )}
           </AnimatePresence>
         </TableContent>
+        <Test>test</Test>
       </MainContent>
     </>
   );
