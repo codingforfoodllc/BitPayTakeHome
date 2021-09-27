@@ -54,9 +54,9 @@ const Main = (props: MainProps) => {
       for (let index = 0; index < tableData.length; index++) {
         const rowData = tableData[index];
         const exchangeRateResult = await getExchangeRate(rowData.Currency);
-        console.log(
-          `${rowData.Currency}:current:${rowData.PriceUSD} next:${exchangeRateResult.rate}`
-        );
+        // console.log(
+        //   `${rowData.Currency}:current:${rowData.PriceUSD} next:${exchangeRateResult.rate}`
+        // );
         rowData.PriceUSD = numberFormatToUSD(exchangeRateResult.rate);
         updateDatedData.push(rowData);
       }
@@ -98,7 +98,7 @@ const Main = (props: MainProps) => {
             <motion.main
               style={{ overflow: "hidden" }}
               initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "50%", opacity: 1 }}
+              animate={{ width: "30%", opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ duration: 0.3, type: "easeout" }}
             >
@@ -149,7 +149,7 @@ const MainWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   height: 100%;
-  width: 100%;
+  width: 80%;
   position: relative;
 `;
 

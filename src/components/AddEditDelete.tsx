@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { FaBeer, FaTimesCircle, FaRegSave } from "react-icons/fa";
+import { FaTimesCircle, FaRegSave } from "react-icons/fa";
 
 import numberFormatToUSD from "../common/formatToUSCurrency";
 import getExchangeRate from "../common/getExchangeRate";
@@ -48,7 +48,7 @@ const AddEditDelete = (props: AddEditDeleteProps) => {
     <Container>
       <ContentContainer>
         <Button onClick={(e) => setEditingRow(null)}>
-          <FaBeer style={{ marginRight: "0.5rem" }} /> Close
+          <FaTimesCircle style={{ marginRight: "0.5rem" }} /> Close
         </Button>
         <Header
           initial={{ x: "100vw", opacity: 0 }}
